@@ -27,6 +27,7 @@ spec:
       containers:
       - name: chugo-flask
         image: chugo-flask:latest 
+        imagePullPolicy: Never 
         ports:
         - containerPort: 5000
         resources:
