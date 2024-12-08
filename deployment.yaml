@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chugo-flask-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 5000
+  selector:
+    app: chugo-flask
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chugo-flask-deployment
+spec:
+  replicas: 3 
+  selector:
+    matchLabels:
+      app: chugo-flask
+  template:
+    metadata:
+      labels:
+        app: chugo-flask
+    spec:
+      containers:
+      - name: chugo-flask
+        image: chugo-flask:latest 
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
